@@ -9,7 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let firstLineButtons: [String] = ["7", "8", "9", "+"]
+    let buttonTitles: [[String]] = [["7", "8", "9", "+"],
+                                    ["4", "5", "6", "-"],
+                                    ["1", "2", "3", "*"],
+                                    ["0", ".", "=", "/"]]
     
     let mainLabel: UILabel = {
         let label = UILabel()
@@ -28,7 +31,7 @@ class ViewController: UIViewController {
     
     func setupView() {
         setupMainLabel()
-        setupStackView(with: firstLineButtons)
+        setGridStackView()
     }
     
     // 입력한 숫자를 표시하는 레이블을 추가하는 함수
@@ -43,8 +46,36 @@ class ViewController: UIViewController {
         ])
     }
     
+    private func setGridStackView() {
+        var arrangedSubviews: [UIStackView] = []
+        
+        for row in buttonTitles {
+            arrangedSubviews.append(setupHorizontalStackView(with: row))
+        }
+        
+        let gridStackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        
+        gridStackView.axis = .vertical
+        gridStackView.backgroundColor = .black
+        gridStackView.spacing = 10
+        gridStackView.distribution = .fillEqually
+        
+        gridStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(gridStackView)
+        
+        NSLayoutConstraint.activate([
+            gridStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            gridStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            gridStackView.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 60),
+            gridStackView.heightAnchor.constraint(equalToConstant: 350),
+            gridStackView.centerXAnchor.constraint(equalTo: super.view.centerXAnchor)
+        ])
+    }
+    
+    
+    
     // 수평스택뷰를 추가하는 함수
-    private func setupStackView(with elements: [String]) {
+    private func setupHorizontalStackView(with elements: [String]) -> UIStackView {
         var buttons: [UIButton] = []
         
         for item in elements {
@@ -59,21 +90,13 @@ class ViewController: UIViewController {
         }
         
         let stackView = UIStackView(arrangedSubviews: buttons)
+        
         stackView.axis = .horizontal
         stackView.backgroundColor = .black
         stackView.spacing = 10
         stackView.distribution = .fillEqually
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            stackView.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 100),
-            stackView.heightAnchor.constraint(equalToConstant: 80)
-        ])
-        
+        return stackView
     }
     
 }
