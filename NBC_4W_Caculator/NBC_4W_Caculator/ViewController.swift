@@ -79,7 +79,9 @@ class ViewController: UIViewController {
         var buttons: [UIButton] = []
         
         for item in elements {
-            buttons.append(makeButton(item))
+            let button = makeButton(item)
+            button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+            buttons.append(button)
         }
         
         let stackView = UIStackView(arrangedSubviews: buttons)
@@ -108,6 +110,10 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = 40
         
         return button
+    }
+    
+    @objc private func buttonPressed(_ sender: UIButton) {
+        print(sender.titleLabel?.text ?? "Unknown Button")
     }
 }
 
