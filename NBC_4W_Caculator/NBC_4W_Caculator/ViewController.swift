@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     let mainLabel: UILabel = {
         let label = UILabel()
-        label.text = "12345"
+        label.text = "0"
         label.textColor = .white
         label.textAlignment = .right
         label.font = .boldSystemFont(ofSize: .init(60))
@@ -113,7 +113,64 @@ class ViewController: UIViewController {
     }
     
     @objc private func buttonPressed(_ sender: UIButton) {
-        print(sender.titleLabel?.text ?? "Unknown Button")
+        let button = sender.titleLabel?.text ?? "Unknown Button"
+        handleButtonPressed(button)
+    }
+    
+    private func handleButtonPressed(_ button: String) {
+        switch button {
+        case "0"..."9" :
+            numberButtonPressed(button)
+        case "+" :
+            plusButtonPressed()
+        case "-" :
+            minusButtonPressed()
+        case "*" :
+            multiplyButtonPressed()
+        case "/" :
+            divideButtonPressed()
+        case "=" :
+            equalButtonPressed()
+        case "AC" :
+            allclearButtonPressed()
+        default:
+            print("Unknown Button Pressed!")
+        }
+    }
+    
+    private func numberButtonPressed(_ num: String) {
+        print("NumberButtonPressed:\(num)")
+        mainLabel.text?.append(num)
+    }
+    
+    private func plusButtonPressed() {
+        print("PlusButtonPressed")
+        mainLabel.text?.append("+")
+    }
+    
+    private func minusButtonPressed() {
+        print("MinusButtonPressed")
+        mainLabel.text?.append("-")
+    }
+    
+    private func multiplyButtonPressed() {
+        print("MultiplyButtonPressed")
+        mainLabel.text?.append("*")
+    }
+    
+    private func divideButtonPressed() {
+        print("DivideButtonPressed")
+        mainLabel.text?.append("/")
+    }
+    
+    private func equalButtonPressed() {
+        print("EqualButtonPressed")
+        mainLabel.text?.append("=")
+    }
+    
+    private func allclearButtonPressed() {
+        print("AllclearButtonPressed")
+        mainLabel.text = "0"
     }
 }
 
