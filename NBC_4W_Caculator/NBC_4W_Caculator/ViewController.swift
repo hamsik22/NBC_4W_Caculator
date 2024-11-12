@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     }
     
     // 타이틀을 입력받고 입력받은 타이틀에 대해서 색깔을 변경하는 함수
-    func makeButton(_ title: String) -> UIButton {
+    private func makeButton(_ title: String) -> UIButton {
         let button = UIButton()
         
         button.setTitle(title, for: .normal)
