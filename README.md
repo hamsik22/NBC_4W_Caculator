@@ -12,13 +12,13 @@
 `main` 브랜치에 `PR` 작성 후 머지
 
 ## 필수 구현
-- `Level1` : `UILabel`을 사용한 초기화면
-- `Level2` : `UIStackView`를 사용한 가로 스택 뷰
-- `Level3` :  `UIStackView`를 사용한 세로 스택 뷰
-- `Level4` : 버튼 색깔 수정하기
-- `Level5` : 모든 버튼 원형으로 만들기
+- [x] [`Level1` : `UILabel`을 사용한 초기화면](https://github.com/hamsik22/NBC_4W_Caculator/issues/1)
+- [x] [`Level2` : `UIStackView`를 사용한 가로 스택 뷰](https://github.com/hamsik22/NBC_4W_Caculator/issues/2)
+- [x] [`Level3` :  `UIStackView`를 사용한 세로 스택 뷰](https://github.com/hamsik22/NBC_4W_Caculator/issues/5)
+- [x] [`Level4` : 버튼 색깔 수정하기](https://github.com/hamsik22/NBC_4W_Caculator/issues/7)
+- [x] `Level5` : 모든 버튼 원형으로 만들기
 
 ## 도전 구현
-- `Level6` : 버튼을 클릭하면 `Label`에 표시하기
-- `Level7` : 초기화 버튼(`AC`) 구현하기
-- `Level8` : `=`버튼의 연산기능 구현하기
+- [ ] `Level6` : 버튼을 클릭하면 `Label`에 표시하기
+- [ ] `Level7` : 초기화 버튼(`AC`) 구현하기
+- [ ] `Level8` : `=`버튼의 연산기능 구현하기
