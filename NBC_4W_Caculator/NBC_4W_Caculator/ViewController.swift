@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     let buttonTitles: [[String]] = [["7", "8", "9", "+"],
                                     ["4", "5", "6", "-"],
                                     ["1", "2", "3", "*"],
-                                    ["0", ".", "=", "/"]]
+                                    ["AC", "0", "=", "/"]]
     
     let mainLabel: UILabel = {
         let label = UILabel()
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         var arrangedSubviews: [UIStackView] = []
         
         for row in buttonTitles {
-            arrangedSubviews.append(setupHorizontalStackView(with: row))
+            arrangedSubviews.append(setupHStackView(row))
         }
         
         let gridStackView = UIStackView(arrangedSubviews: arrangedSubviews)
@@ -75,18 +75,11 @@ class ViewController: UIViewController {
     
     
     // 수평스택뷰를 추가하는 함수
-    private func setupHorizontalStackView(with elements: [String]) -> UIStackView {
+    private func setupHStackView(_ elements: [String]) -> UIStackView {
         var buttons: [UIButton] = []
         
         for item in elements {
-            let button = UIButton()
-            button.setTitle(item, for: .normal)
-            button.titleLabel?.font = .boldSystemFont(ofSize: .init(30))
-            button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-            button.frame.size.height = 80
-            button.frame.size.width = 80
-            button.layer.cornerRadius = 40
-            buttons.append(button)
+            buttons.append(makeButton(item))
         }
         
         let stackView = UIStackView(arrangedSubviews: buttons)
@@ -99,5 +92,22 @@ class ViewController: UIViewController {
         return stackView
     }
     
+    // 타이틀을 입력받고 입력받은 타이틀에 대해서 색깔을 변경하는 함수
+    private func makeButton(_ title: String) -> UIButton {
+        let button = UIButton()
+        
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 30)
+        if Int(title) != nil {
+            button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        } else {
+            button.backgroundColor = .orange
+        }
+        button.frame.size.height = 80
+        button.frame.size.width = 80
+        button.layer.cornerRadius = 40
+        
+        return button
+    }
 }
 
