@@ -19,8 +19,8 @@
 - [x] `Level5` : 모든 버튼 원형으로 만들기
 
 ## 도전 구현
-- [ ] `Level6` : 버튼을 클릭하면 `Label`에 표시하기
-- [ ] `Level7` : 초기화 버튼(`AC`) 구현하기
+- [x] [`Level6` : 버튼을 클릭하면 `Label`에 표시하기](https://github.com/hamsik22/NBC_4W_Caculator/pull/11)
+- [x] [`Level7` : 초기화 버튼(`AC`) 구현하기](https://github.com/hamsik22/NBC_4W_Caculator/pull/11)
 - [ ] `Level8` : `=`버튼의 연산기능 구현하기
 
 # 평가기준
