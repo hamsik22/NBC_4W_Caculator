@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     let mainLabel: UILabel = {
         let label = UILabel()
-        label.text = "12345"
+        label.text = "0"
         label.textColor = .white
         label.textAlignment = .right
         label.font = .boldSystemFont(ofSize: .init(60))
@@ -25,16 +25,19 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 배경색 변경
         view.backgroundColor = .black
+        // 뷰 생성
         setupView()
     }
     
+    /// 뷰들을 세팅하는 함수
     func setupView() {
         setupMainLabel()
         setGridStackView()
     }
     
-    // 입력한 숫자를 표시하는 레이블을 추가하는 함수
+    /// 입력한 숫자를 표시하는 레이블을 추가하는 함수
     private func setupMainLabel() {
         view.addSubview(mainLabel)
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -46,6 +49,7 @@ class ViewController: UIViewController {
         ])
     }
     
+    /// 그리드 스택뷰를 생성하는 함수
     private func setGridStackView() {
         var arrangedSubviews: [UIStackView] = []
         
@@ -74,12 +78,14 @@ class ViewController: UIViewController {
     
     
     
-    // 수평스택뷰를 추가하는 함수
+    /// 수평스택뷰를 추가하는 함수
     private func setupHStackView(_ elements: [String]) -> UIStackView {
         var buttons: [UIButton] = []
         
         for item in elements {
-            buttons.append(makeButton(item))
+            let button = makeButton(item)
+            button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+            buttons.append(button)
         }
         
         let stackView = UIStackView(arrangedSubviews: buttons)
@@ -92,7 +98,7 @@ class ViewController: UIViewController {
         return stackView
     }
     
-    // 타이틀을 입력받고 입력받은 타이틀에 대해서 색깔을 변경하는 함수
+    /// 타이틀을 입력받고 입력받은 타이틀에 대해서 색깔을 변경하는 함수
     private func makeButton(_ title: String) -> UIButton {
         let button = UIButton()
         
@@ -108,6 +114,86 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = 40
         
         return button
+    }
+    
+    /// 버튼이 눌러졌을 때 호출되는 함수
+    @objc private func buttonPressed(_ sender: UIButton) {
+        let button = sender.titleLabel?.text ?? "Unknown Button"
+        handleButtonPressed(button)
+        enteringValue()
+    }
+    
+    /// 버튼에 따라 호출할 함수를 판단
+    private func handleButtonPressed(_ button: String) {
+        switch button {
+        case "0"..."9" :
+            numberButtonPressed(button)
+        case "+" :
+            plusButtonPressed()
+        case "-" :
+            minusButtonPressed()
+        case "*" :
+            multiplyButtonPressed()
+        case "/" :
+            divideButtonPressed()
+        case "=" :
+            equalButtonPressed()
+        case "AC" :
+            allclearButtonPressed()
+        default:
+            print("Unknown Button Pressed!")
+        }
+    }
+    
+    /// 숫자버튼 터치
+    private func numberButtonPressed(_ num: String) {
+        print("NumberButtonPressed:\(num)")
+        mainLabel.text?.append(num)
+    }
+    
+    /// 더하기버튼 터치
+    private func plusButtonPressed() {
+        print("PlusButtonPressed")
+        mainLabel.text?.append("+")
+    }
+    
+    /// 빼기버튼 터치
+    private func minusButtonPressed() {
+        print("MinusButtonPressed")
+        mainLabel.text?.append("-")
+    }
+    
+    /// 곱하기버튼 터치
+    private func multiplyButtonPressed() {
+        print("MultiplyButtonPressed")
+        mainLabel.text?.append("*")
+    }
+    
+    /// 나누기버튼 터치
+    private func divideButtonPressed() {
+        print("DivideButtonPressed")
+        mainLabel.text?.append("/")
+    }
+    
+    /// 등호버튼 터치
+    private func equalButtonPressed() {
+        print("EqualButtonPressed")
+        mainLabel.text?.append("=")
+    }
+    
+    /// AC버튼 터치
+    private func allclearButtonPressed() {
+        print("AllclearButtonPressed")
+        mainLabel.text = "0"
+    }
+    
+    /// 메인레이블이 "0"이면 return
+    /// 만약 메인레이블의 첫 문자가 "0"이면 첫번째 요소 삭제
+    private func enteringValue() {
+        guard mainLabel.text != "0" else { return }
+        if mainLabel.text?.first == "0" {
+            mainLabel.text?.remove(at: self.mainLabel.text!.startIndex)
+        }
     }
 }
 
