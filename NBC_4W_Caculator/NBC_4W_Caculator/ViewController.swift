@@ -10,8 +10,6 @@ import UIKit
 class ViewController: UIViewController {
     
     var inputs: String = ""
-    var symbol: String = ""
-    var second: String = ""
     var numberInputs: [String] = []
     var symbolInputs: [String] = []
     
@@ -151,23 +149,6 @@ class ViewController: UIViewController {
         }
     }
     
-    /// 입력된 문자열을 연산할 수 있는 단위의 데이터로 분리하는 함수
-//    private func separateInput(input: String) {
-//        var temp = ""
-//        // 2항 연산에 맞춰진 로직
-//        for char in input {
-//            if !char.isNumber {
-//                if !temp.isEmpty {
-//                    numberInputs.append(temp)
-//                }
-//                self.symbolInputs.append(String(char))
-//            }
-//            if char.isNumber {
-//                temp.append(char)
-//            }
-//        }
-//    }
-    
     /// 숫자버튼 터치
     private func numberButtonPressed(_ num: String) {
         print("NumberButtonPressed:\(num)")
@@ -222,7 +203,9 @@ class ViewController: UIViewController {
         symbolInputs = []
     }
     
+    /// 입력된 데이터를 기준으로 연산하는 함수
     private func runnimgNumbers () {
+        // 초기 값을 numberInputs의 첫번째 요소로 초기화
         var result = Int(numberInputs[0])!
         for (num, symbol) in zip(self.numberInputs.dropFirst(), self.symbolInputs) {
             if let number = Int(num) {
@@ -242,6 +225,7 @@ class ViewController: UIViewController {
                 }
             }
         }
+        // 결과값은 화면에만 출력
         self.mainLabel.text = String(result)
     }
     
