@@ -9,6 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var first: String = ""
+    var symbol: String = ""
+    var second: String = ""
+    
     let buttonTitles: [[String]] = [["7", "8", "9", "+"],
                                     ["4", "5", "6", "-"],
                                     ["1", "2", "3", "*"],
@@ -145,6 +149,25 @@ class ViewController: UIViewController {
         }
     }
     
+    /// 입력된 문자열을 연산할 수 있는 단위의 데이터로 분리하는 함수
+    private func separateInput(input: String) {
+        symbol = ""
+        first = ""
+        second = ""
+        // 2항 연산에 맞춰진 로직
+        for char in input {
+            if !char.isNumber {
+                self.symbol.append(char)
+                continue
+            }
+            if !self.symbol.isEmpty {
+                self.first.append(char)
+            } else {
+                self.second.append(char)
+            }
+        }
+    }
+    
     /// 숫자버튼 터치
     private func numberButtonPressed(_ num: String) {
         print("NumberButtonPressed:\(num)")
@@ -177,8 +200,22 @@ class ViewController: UIViewController {
     
     /// 등호버튼 터치
     private func equalButtonPressed() {
+        
         print("EqualButtonPressed")
-        mainLabel.text?.append("=")
+        separateInput(input: mainLabel.text!)
+        
+        switch symbol {
+        case "+":
+            self.mainLabel.text = String(Int(first)! + Int(second)!)
+        case "-":
+            self.mainLabel.text = String(Int(second)! - Int(first)!)
+        case "*":
+            self.mainLabel.text = String(Int(first)! * Int(second)!)
+        case "/":
+            self.mainLabel.text = String(Int(second)! / Int(first)!)
+        default:
+            print("Wrong Process")
+        }
     }
     
     /// AC버튼 터치
