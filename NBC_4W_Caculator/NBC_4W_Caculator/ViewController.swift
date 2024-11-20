@@ -9,9 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var first: String = ""
+    var inputs: String = ""
     var symbol: String = ""
     var second: String = ""
+    var numberInputs: [String] = []
+    var symbolInputs: [String] = []
     
     let buttonTitles: [[String]] = [["7", "8", "9", "+"],
                                     ["4", "5", "6", "-"],
@@ -150,72 +152,97 @@ class ViewController: UIViewController {
     }
     
     /// 입력된 문자열을 연산할 수 있는 단위의 데이터로 분리하는 함수
-    private func separateInput(input: String) {
-        symbol = ""
-        first = ""
-        second = ""
-        // 2항 연산에 맞춰진 로직
-        for char in input {
-            if !char.isNumber {
-                self.symbol.append(char)
-                continue
-            }
-            if !self.symbol.isEmpty {
-                self.first.append(char)
-            } else {
-                self.second.append(char)
-            }
-        }
-    }
+//    private func separateInput(input: String) {
+//        var temp = ""
+//        // 2항 연산에 맞춰진 로직
+//        for char in input {
+//            if !char.isNumber {
+//                if !temp.isEmpty {
+//                    numberInputs.append(temp)
+//                }
+//                self.symbolInputs.append(String(char))
+//            }
+//            if char.isNumber {
+//                temp.append(char)
+//            }
+//        }
+//    }
     
     /// 숫자버튼 터치
     private func numberButtonPressed(_ num: String) {
         print("NumberButtonPressed:\(num)")
         mainLabel.text?.append(num)
+        inputs.append(num)
     }
     
     /// 더하기버튼 터치
     private func plusButtonPressed() {
         print("PlusButtonPressed")
         mainLabel.text?.append("+")
+        symbolInputs.append("+")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 빼기버튼 터치
     private func minusButtonPressed() {
         print("MinusButtonPressed")
         mainLabel.text?.append("-")
+        symbolInputs.append("-")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 곱하기버튼 터치
     private func multiplyButtonPressed() {
         print("MultiplyButtonPressed")
         mainLabel.text?.append("*")
+        symbolInputs.append("*")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 나누기버튼 터치
     private func divideButtonPressed() {
         print("DivideButtonPressed")
         mainLabel.text?.append("/")
+        symbolInputs.append("/")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 등호버튼 터치
     private func equalButtonPressed() {
-        
         print("EqualButtonPressed")
-        separateInput(input: mainLabel.text!)
-        
-        switch symbol {
-        case "+":
-            self.mainLabel.text = String(Int(first)! + Int(second)!)
-        case "-":
-            self.mainLabel.text = String(Int(second)! - Int(first)!)
-        case "*":
-            self.mainLabel.text = String(Int(first)! * Int(second)!)
-        case "/":
-            self.mainLabel.text = String(Int(second)! / Int(first)!)
-        default:
-            print("Wrong Process")
+        symbolInputs.append("=")
+        numberInputs.append(inputs)
+        runnimgNumbers()
+        inputs = ""
+        numberInputs = []
+        symbolInputs = []
+    }
+    
+    private func runnimgNumbers () {
+        var result = Int(numberInputs[0])!
+        for (num, symbol) in zip(self.numberInputs.dropFirst(), self.symbolInputs) {
+            if let number = Int(num) {
+                switch symbol {
+                case "+":
+                    result += number
+                case "-":
+                    result -= number
+                case "*":
+                    result *= number
+                case "/":
+                    result /= number
+                case "=":
+                    print("Running Numbers!")
+                default:
+                    print("Wrong Process")
+                }
+            }
         }
+        self.mainLabel.text = String(result)
     }
     
     /// AC버튼 터치
