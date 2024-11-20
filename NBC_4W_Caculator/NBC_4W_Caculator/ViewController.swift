@@ -9,6 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var inputs: String = ""
+    var numberInputs: [String] = []
+    var symbolInputs: [String] = []
+    
     let buttonTitles: [[String]] = [["7", "8", "9", "+"],
                                     ["4", "5", "6", "-"],
                                     ["1", "2", "3", "*"],
@@ -149,36 +153,80 @@ class ViewController: UIViewController {
     private func numberButtonPressed(_ num: String) {
         print("NumberButtonPressed:\(num)")
         mainLabel.text?.append(num)
+        inputs.append(num)
     }
     
     /// 더하기버튼 터치
     private func plusButtonPressed() {
         print("PlusButtonPressed")
         mainLabel.text?.append("+")
+        symbolInputs.append("+")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 빼기버튼 터치
     private func minusButtonPressed() {
         print("MinusButtonPressed")
         mainLabel.text?.append("-")
+        symbolInputs.append("-")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 곱하기버튼 터치
     private func multiplyButtonPressed() {
         print("MultiplyButtonPressed")
         mainLabel.text?.append("*")
+        symbolInputs.append("*")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 나누기버튼 터치
     private func divideButtonPressed() {
         print("DivideButtonPressed")
         mainLabel.text?.append("/")
+        symbolInputs.append("/")
+        numberInputs.append(inputs)
+        inputs = ""
     }
     
     /// 등호버튼 터치
     private func equalButtonPressed() {
         print("EqualButtonPressed")
-        mainLabel.text?.append("=")
+        symbolInputs.append("=")
+        numberInputs.append(inputs)
+        runnimgNumbers()
+        inputs = ""
+        numberInputs = []
+        symbolInputs = []
+    }
+    
+    /// 입력된 데이터를 기준으로 연산하는 함수
+    private func runnimgNumbers () {
+        // 초기 값을 numberInputs의 첫번째 요소로 초기화
+        var result = Int(numberInputs[0])!
+        for (num, symbol) in zip(self.numberInputs.dropFirst(), self.symbolInputs) {
+            if let number = Int(num) {
+                switch symbol {
+                case "+":
+                    result += number
+                case "-":
+                    result -= number
+                case "*":
+                    result *= number
+                case "/":
+                    result /= number
+                case "=":
+                    print("Running Numbers!")
+                default:
+                    print("Wrong Process")
+                }
+            }
+        }
+        // 결과값은 화면에만 출력
+        self.mainLabel.text = String(result)
     }
     
     /// AC버튼 터치
